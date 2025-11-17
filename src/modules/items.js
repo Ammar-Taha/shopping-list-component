@@ -152,13 +152,8 @@ export function addItem(itemName) {
     emptyStateIllustration.style.display = "none";
   }
 
-  // Show the empty state button again if it was hidden
-  const emptyStateButton = document.querySelector(
-    ".shopping-app__empty-state-button"
-  );
-  if (emptyStateButton) {
-    emptyStateButton.style.display = "flex";
-  }
+  // Hide the empty state button when an item is added (toggleEmptyState will handle this)
+  // The button will be hidden automatically by toggleEmptyState() called via updateItemCount()
 
   // Clear the input
   DOM.itemInput.value = "";

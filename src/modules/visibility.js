@@ -45,15 +45,21 @@ export function toggleListVisibility(isHidden) {
       emptyStateButton.style.display = "none";
     }
   } else {
-    // Show the list and other content
-    if (listElement) {
-      listElement.style.display = "";
-    }
-    // Show the filters if there are items
-    const filtersContainer = document.querySelector(".shopping-app__filters");
+    // Calculate total items first
     const totalItems = listElement
       ? listElement.querySelectorAll(".shopping-app__item").length
       : 0;
+    
+    // Show the list only if there are items
+    if (listElement) {
+      if (totalItems > 0) {
+        listElement.style.display = "";
+      } else {
+        listElement.style.display = "none";
+      }
+    }
+    // Show the filters if there are items
+    const filtersContainer = document.querySelector(".shopping-app__filters");
     if (filtersContainer && totalItems > 0) {
       filtersContainer.style.display = "flex";
     }
@@ -70,6 +76,13 @@ export function toggleListVisibility(isHidden) {
     if (emptyState) {
       if (totalItems === 0) {
         emptyState.style.display = "flex";
+        // Show the empty state button when there are no items
+        const emptyStateButton = document.querySelector(
+          ".shopping-app__empty-state-button"
+        );
+        if (emptyStateButton) {
+          emptyStateButton.style.display = "flex";
+        }
       } else {
         emptyState.style.display = "none";
       }

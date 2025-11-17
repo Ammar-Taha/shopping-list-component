@@ -121,11 +121,6 @@ export function setupEventListeners() {
   // Handle empty state button click
   if (DOM.emptyStateButton) {
     DOM.emptyStateButton.addEventListener("click", () => {
-      // Hide empty state button
-      if (DOM.emptyStateButton) {
-        DOM.emptyStateButton.style.display = "none";
-      }
-
       // Add class to trigger blue focus style
       if (DOM.itemInput) {
         DOM.itemInput.classList.add("focus-from-empty-state");
@@ -139,14 +134,6 @@ export function setupEventListeners() {
           },
           { once: true }
         );
-      }
-
-      // Show the SVG illustration at the end (after hiding the button)
-      const emptyStateIllustration = document.querySelector(
-        ".shopping-app__empty-state-illustration"
-      );
-      if (emptyStateIllustration) {
-        emptyStateIllustration.style.display = "block";
       }
     });
   }
