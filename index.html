@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Shopping List</title>
+  </head>
+  <body>
+    <a href="#shopping-main" class="skip-link">Skip to main content</a>
+
+    <main class="shopping-container" id="shopping-main">
+      <div class="shopping-app" aria-label="Shopping List Application">
+        <!-- Header Section -->
+        <header
+          class="shopping-app__header"
+          aria-label="Shopping list overview"
+        >
+          <h1>
+            <span class="shopping-app__title">Listify</span>
+            <span class="shopping-app__badge">My shopping list</span>
+          </h1>
+          <p class="shopping-app__subtitle">
+            Plan what you need, then glide through the store without forgetting
+            a thing.
+          </p>
+
+          <div class="shopping-app__search-controls">
+            <label for="search-input" class="visually-hidden"
+              >Search items in your list</label
+            >
+            <div class="shopping-app__search-wrapper">
+              <input
+                type="search"
+                id="search-input"
+                name="search"
+                placeholder="Search items in your list"
+                autocomplete="off"
+              />
+              <svg
+                class="shopping-app__search-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="6"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <line
+                  x1="15.2"
+                  y1="15.2"
+                  x2="20"
+                  y2="20"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+
+            <div class="shopping-app__controls">
+              <label class="shopping-app__toggle-label">
+                <input
+                  type="checkbox"
+                  id="hide-list"
+                  class="shopping-app__toggle-input"
+                />
+                <span>Hide list</span>
+              </label>
+              <span
+                class="shopping-app__pill"
+                role="status"
+                aria-label="Focus mode: Active"
+              >
+                <span class="shopping-app__pill-dot" aria-hidden="true"></span>
+                Focus mode
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Items Section -->
+        <section class="shopping-app__items" aria-labelledby="items-heading">
+          <form class="shopping-app__add-form" autocomplete="off" novalidate>
+            <label for="item-input" class="visually-hidden"
+              >Add a new item</label
+            >
+            <input
+              type="text"
+              id="item-input"
+              name="item"
+              placeholder="Add a new item"
+              required
+            />
+            <button type="submit" aria-label="Add item to list">
+              <span aria-hidden="true">+</span>
+              <span>Add</span>
+            </button>
+          </form>
+
+          <div class="shopping-app__items-heading">
+            <h2 id="items-heading" class="shopping-app__items-title">
+              Items to buy
+            </h2>
+            <span class="shopping-app__badge-count" aria-live="polite">
+              <span class="shopping-app__badge-dot" aria-hidden="true"></span>
+              <output class="shopping-app__item-count" for="item-input"
+                >3</output
+              >
+              <span aria-label="items in list"> items</span>
+            </span>
+          </div>
+
+          <ul class="shopping-app__list" aria-labelledby="items-heading">
+            <li class="shopping-app__item">
+              <span class="shopping-app__item-name">Fresh blueberries</span>
+              <button
+                type="button"
+                class="shopping-app__item-delete"
+                aria-label="Remove Fresh blueberries"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </li>
+
+            <li class="shopping-app__item">
+              <span class="shopping-app__item-name">Almond milk</span>
+              <button
+                type="button"
+                class="shopping-app__item-delete"
+                aria-label="Remove Almond milk"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </li>
+
+            <li class="shopping-app__item">
+              <span class="shopping-app__item-name">Whole grain bread</span>
+              <button
+                type="button"
+                class="shopping-app__item-delete"
+                aria-label="Remove Whole grain bread"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
