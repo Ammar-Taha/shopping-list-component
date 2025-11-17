@@ -4,12 +4,12 @@
 // This is the main orchestrator that imports and wires together
 // all the modular components of the shopping list application.
 
-import "./index.css";
+import "./styles/index.css";
 
 import { DOM } from "./modules/dom.js";
 import { setupEventListeners } from "./modules/events.js";
 import { loadItemsFromStorage } from "./modules/items.js";
-import { applyFilter, toggleFilterButtons, toggleEmptyState } from "./modules/utils.js";
+import { applyFilter, toggleFilterButtons, toggleEmptyState, updateItemCount } from "./modules/utils.js";
 import { toggleListVisibility } from "./modules/visibility.js";
 
 // ============================================
@@ -41,6 +41,9 @@ function initShoppingList() {
 
   // Apply initial filter state
   applyFilter();
+
+  // Update item count (which also updates tooltip)
+  updateItemCount();
 
   // Toggle filter buttons visibility based on item count
   toggleFilterButtons();

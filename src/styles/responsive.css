@@ -1,0 +1,161 @@
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+/* Small screens (mobile) */
+@media (max-width: 48rem) {
+  body {
+    padding: var(--spacing-sm);
+  }
+
+  /* Container - full width with padding */
+  .shopping-container {
+    width: 100%;
+    padding: var(--spacing-md);
+  }
+
+  .shopping-app {
+    min-height: auto;
+  }
+
+  /* Header - smaller padding and spacing */
+  .shopping-app__header {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  /* Title - smaller font size */
+  .shopping-app__header h1 {
+    font-size: var(--font-size-xl);
+    gap: var(--spacing-sm);
+  }
+
+  /* Hide badge on small screens */
+  .shopping-app__badge {
+    display: none;
+  }
+
+  /* Subtitle - smaller font */
+  .shopping-app__subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Search controls - smaller gap */
+  .shopping-app__search-controls {
+    gap: var(--spacing-md);
+  }
+
+  /* Search input - responsive padding */
+  .shopping-app__search-wrapper input {
+    padding: var(--spacing-xs) var(--spacing-md) var(--spacing-xs)
+      var(--spacing-lg);
+    font-size: var(--font-size-sm);
+  }
+
+  .shopping-app__search-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Controls - keep horizontal layout on mobile */
+  .shopping-app__controls {
+    gap: var(--spacing-sm);
+  }
+
+  /* Items section - smaller padding */
+  .shopping-app__items {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  /* Add form - stack vertically */
+  .shopping-app__add-form {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding-bottom: var(--spacing-md);
+  }
+
+  .shopping-app__add-form input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .shopping-app__add-form button {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    justify-content: center;
+  }
+
+  /* Items heading - keep horizontal layout on mobile */
+  .shopping-app__items-heading {
+    gap: var(--spacing-xs);
+  }
+
+  .shopping-app__items-title {
+    font-size: var(--font-size-base);
+  }
+
+  /* List items - smaller padding */
+  .shopping-app__item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-sm);
+    min-height: auto;
+  }
+
+  .shopping-app__item-name {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 48.01rem) and (max-width: 64rem) {
+  .shopping-container {
+    width: 100%;
+    max-width: var(--size-shopping-width);
+    padding: var(--spacing-lg);
+  }
+
+  .shopping-app__header {
+    padding: var(--spacing-lg);
+  }
+
+  .shopping-app__items {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Large screens - ensure container doesn't get too wide */
+@media (min-width: 64.01rem) {
+  .shopping-container {
+    max-width: var(--size-shopping-width);
+  }
+}
+
+/* Very small screens - stack controls and headings */
+@media (max-width: 22.5rem) {
+  /* Center align header content */
+  .shopping-app__header {
+    text-align: center;
+  }
+
+  .shopping-app__header h1 {
+    justify-content: center;
+  }
+
+  /* Controls - stack vertically on very small screens */
+  .shopping-app__controls {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  /* Items heading - stack vertically on very small screens */
+  .shopping-app__items-heading {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+}
+

@@ -21,4 +21,9 @@ export const DOM = {
   emptyState: document.getElementById("empty-state"),
   emptyStateButton: document.querySelector(".shopping-app__empty-state-button"),
   filterEmptyStateMessage: document.getElementById("filter-empty-state"),
+  badgeCount: document.querySelector(".shopping-app__badge-count"),
+  countTooltip: document.getElementById("count-tooltip"),
+  countTooltipContent: document.querySelector(
+    ".shopping-app__count-tooltip-content"
+  ),
 };

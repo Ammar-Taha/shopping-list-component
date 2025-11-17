@@ -1,0 +1,16 @@
+/* ============================================
+   Layout - Container & Grid
+   ============================================ */
+
+.shopping-container {
+  width: var(--size-shopping-width);
+}
+
+.shopping-app {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  border: var(--size-border-thin) solid var(--color-primary-darker);
+  min-height: 40rem;
+}
+

@@ -1,0 +1,50 @@
+/* ============================================
+   Base Styles
+   ============================================ */
+
+body {
+  font-family: "Noto Sans Mono", sans-serif;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-primary);
+}
+
+button {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-item);
+  border: var(--size-border-thin) solid var(--color-primary-darker);
+  cursor: pointer;
+  transition: var(--transition-fast);
+
+  &:disabled {
+    opacity: var(--opacity-disabled);
+    color: var(--color-text-disabled);
+    background-color: var(--color-bg-button-disabled);
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-darker);
+    outline-offset: 2px;
+  }
+}
+
+input[type="text"],
+input[type="search"] {
+  border: var(--size-border-thin) solid var(--color-primary-darker);
+  background-color: var(--color-bg-search);
+  color: var(--color-text-primary);
+  transition: var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(9, 12, 38, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--color-text-disabled);
+  }
+}
+

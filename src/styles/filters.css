@@ -1,0 +1,38 @@
+/* ============================================
+   Filter Buttons
+   ============================================ */
+
+.shopping-app__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.shopping-app__filter-empty-message {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.shopping-app__filter-btn {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: var(--size-border-thin) solid var(--color-primary-darker);
+  background-color: var(--color-bg-item);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.shopping-app__filter-btn:hover:not(.shopping-app__filter-btn--active):not([aria-pressed="true"]) {
+  background-color: var(--color-bg-button-hover);
+}
+
+.shopping-app__filter-btn--active,
+.shopping-app__filter-btn[aria-pressed="true"] {
+  background-color: var(--color-primary-darker);
+  color: white;
+}
+

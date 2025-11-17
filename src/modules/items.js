@@ -17,10 +17,11 @@ function ensureListVisible() {
   }
 }
 
-export function createListItem(itemName, completed = false) {
+export function createListItem(itemName, completed = false, quantity = 1) {
   // Create list item element
   const listItem = document.createElement("li");
   listItem.className = "shopping-app__item";
+  listItem.draggable = true;
   if (completed) {
     listItem.classList.add("shopping-app__item--completed");
   }
@@ -37,10 +38,58 @@ export function createListItem(itemName, completed = false) {
 
   checkboxLabel.appendChild(checkbox);
 
+  // Create item name container
+  const itemNameContainer = document.createElement("div");
+  itemNameContainer.className = "shopping-app__item-name-container";
+
   // Create item name span
   const itemNameSpan = document.createElement("span");
   itemNameSpan.className = "shopping-app__item-name";
   itemNameSpan.textContent = itemName;
+
+  // Create quantity controls
+  const quantityContainer = document.createElement("div");
+  quantityContainer.className = "shopping-app__item-quantity";
+
+  // Decrease button
+  const decreaseBtn = document.createElement("button");
+  decreaseBtn.type = "button";
+  decreaseBtn.className = "shopping-app__quantity-btn shopping-app__quantity-btn--decrease";
+  decreaseBtn.setAttribute("aria-label", "Decrease quantity");
+  decreaseBtn.textContent = "−";
+  if (completed) {
+    decreaseBtn.disabled = true;
+  }
+
+  // Quantity input
+  const quantityInput = document.createElement("input");
+  quantityInput.type = "number";
+  quantityInput.className = "shopping-app__quantity-input";
+  quantityInput.value = quantity.toString();
+  quantityInput.min = "1";
+  quantityInput.setAttribute("aria-label", "Item quantity");
+  if (completed) {
+    quantityInput.disabled = true;
+  }
+
+  // Increase button
+  const increaseBtn = document.createElement("button");
+  increaseBtn.type = "button";
+  increaseBtn.className = "shopping-app__quantity-btn shopping-app__quantity-btn--increase";
+  increaseBtn.setAttribute("aria-label", "Increase quantity");
+  increaseBtn.textContent = "+";
+  if (completed) {
+    increaseBtn.disabled = true;
+  }
+
+  // Assemble quantity controls
+  quantityContainer.appendChild(decreaseBtn);
+  quantityContainer.appendChild(quantityInput);
+  quantityContainer.appendChild(increaseBtn);
+
+  // Assemble item name container
+  itemNameContainer.appendChild(itemNameSpan);
+  itemNameContainer.appendChild(quantityContainer);
 
   // Create actions container
   const actionsContainer = document.createElement("div");
@@ -69,7 +118,7 @@ export function createListItem(itemName, completed = false) {
 
   // Assemble the list item
   listItem.appendChild(checkboxLabel);
-  listItem.appendChild(itemNameSpan);
+  listItem.appendChild(itemNameContainer);
   listItem.appendChild(actionsContainer);
 
   return listItem;
@@ -80,8 +129,8 @@ export function addItem(itemName) {
     return; // Don't add empty items
   }
 
-  // Create new list item
-  const listItem = createListItem(itemName.trim());
+  // Create new list item (default quantity is 1)
+  const listItem = createListItem(itemName.trim(), false, 1);
 
   // Add to the list
   DOM.listElement.appendChild(listItem);
@@ -139,6 +188,21 @@ export function toggleItemCompleted(listItem) {
   const editButton = listItem.querySelector(".shopping-app__item-edit");
   if (editButton) {
     editButton.disabled = isCompleted;
+  }
+
+  // Enable/disable quantity controls based on completion state
+  const quantityInput = listItem.querySelector(".shopping-app__quantity-input");
+  const increaseBtn = listItem.querySelector(".shopping-app__quantity-btn--increase");
+  const decreaseBtn = listItem.querySelector(".shopping-app__quantity-btn--decrease");
+  
+  if (quantityInput) {
+    quantityInput.disabled = isCompleted;
+  }
+  if (increaseBtn) {
+    increaseBtn.disabled = isCompleted;
+  }
+  if (decreaseBtn) {
+    decreaseBtn.disabled = isCompleted;
   }
 
   // Update aria-label
@@ -258,8 +322,65 @@ export function editItem(listItem) {
 }
 
 /**
- * Get all current items from the DOM with their completed state
- * @returns {Array<{name: string, completed: boolean}>} Array of item objects
+ * Reorder items by moving dragged item to new position
+ * @param {HTMLElement} draggedItem - The item being dragged
+ * @param {HTMLElement} targetItem - The item being dropped on
+ */
+export function reorderItems(draggedItem, targetItem) {
+  if (!draggedItem || !targetItem || draggedItem === targetItem) {
+    return;
+  }
+
+  const listElement = draggedItem.parentElement;
+  if (!listElement || listElement !== targetItem.parentElement) {
+    return;
+  }
+
+  // Get all items in current order
+  const items = Array.from(listElement.querySelectorAll(".shopping-app__item"));
+  const draggedIndex = items.indexOf(draggedItem);
+  const targetIndex = items.indexOf(targetItem);
+
+  // Remove dragged item from its current position
+  items.splice(draggedIndex, 1);
+  
+  // Insert at new position
+  items.splice(targetIndex, 0, draggedItem);
+
+  // Reorder DOM elements
+  items.forEach((item) => {
+    listElement.appendChild(item);
+  });
+
+  // Save new order to localStorage
+  saveItemsList();
+}
+
+/**
+ * Update quantity for an item
+ * @param {HTMLElement} listItem - The list item element
+ * @param {number} newQuantity - The new quantity value
+ */
+export function updateItemQuantity(listItem, newQuantity) {
+  if (!listItem) return;
+  
+  const quantityInput = listItem.querySelector(".shopping-app__quantity-input");
+  if (!quantityInput) return;
+  
+  // Ensure quantity is at least 1
+  const validQuantity = Math.max(1, parseInt(newQuantity, 10) || 1);
+  quantityInput.value = validQuantity.toString();
+  
+  // Save to localStorage
+  saveItemsList();
+  
+  // Update the item count
+  updateItemCount();
+}
+
+/**
+ * Get all current items from the DOM with their completed state and quantity
+ * @returns {Array<{name: string, completed: boolean, quantity: number}>} Array of item objects
  */
 function getCurrentItems() {
   const items = DOM.listElement.querySelectorAll(".shopping-app__item");
@@ -267,9 +388,11 @@ function getCurrentItems() {
     .map((item) => {
       const nameElement = item.querySelector(".shopping-app__item-name");
       const checkbox = item.querySelector(".shopping-app__item-checkbox");
+      const quantityInput = item.querySelector(".shopping-app__quantity-input");
       const name = nameElement ? nameElement.textContent.trim() : "";
       const completed = checkbox ? checkbox.checked : false;
-      return { name, completed };
+      const quantity = quantityInput ? parseInt(quantityInput.value, 10) || 1 : 1;
+      return { name, completed, quantity };
     })
     .filter((item) => item.name !== "");
 }
@@ -284,15 +407,17 @@ function saveItemsList() {
 
 /**
  * Get initial items from HTML if they exist
- * @returns {Array<{name: string, completed: boolean}>} Array of item objects from HTML
+ * @returns {Array<{name: string, completed: boolean, quantity: number}>} Array of item objects from HTML
  */
 function getInitialItemsFromHTML() {
   const items = DOM.listElement.querySelectorAll(".shopping-app__item");
   return Array.from(items)
     .map((item) => {
       const nameElement = item.querySelector(".shopping-app__item-name");
+      const quantityInput = item.querySelector(".shopping-app__quantity-input");
       const name = nameElement ? nameElement.textContent.trim() : "";
-      return { name, completed: false };
+      const quantity = quantityInput ? parseInt(quantityInput.value, 10) || 1 : 1;
+      return { name, completed: false, quantity };
     })
     .filter((item) => item.name !== "");
 }
@@ -425,10 +550,11 @@ export function loadItemsFromStorage() {
   storedItems.forEach((item) => {
     // Handle migration from old format (string)
     const itemName = typeof item === "string" ? item : item.name;
+    const quantity = typeof item === "string" ? 1 : (item.quantity || 1);
     const completed = typeof item === "string" ? false : item.completed;
     
     if (itemName && itemName.trim()) {
-      const listItem = createListItem(itemName.trim(), completed);
+      const listItem = createListItem(itemName.trim(), completed, quantity);
       DOM.listElement.appendChild(listItem);
     }
   });

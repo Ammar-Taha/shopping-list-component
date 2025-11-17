@@ -1,0 +1,15 @@
+/* ============================================
+   Drag & Drop Styles
+   ============================================ */
+
+.shopping-app__item--dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.shopping-app__item--drag-over {
+  border-color: var(--color-edit);
+  border-width: 2px;
+  background-color: var(--color-bg-button-hover);
+}
+

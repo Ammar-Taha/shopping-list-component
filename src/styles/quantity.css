@@ -1,0 +1,74 @@
+/* ============================================
+   Quantity Controls
+   ============================================ */
+
+.shopping-app__item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.shopping-app__quantity-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: var(--size-border-thin) solid var(--color-primary-darker);
+  background-color: var(--color-bg-item);
+  color: var(--color-primary-darker);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.shopping-app__quantity-btn:hover:not(:disabled) {
+  background-color: var(--color-bg-button-hover);
+}
+
+.shopping-app__quantity-btn:active {
+  transform: scale(0.95);
+}
+
+.shopping-app__quantity-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shopping-app__quantity-btn:disabled:hover {
+  background-color: var(--color-bg-item);
+  transform: none;
+}
+
+.shopping-app__quantity-input {
+  width: 2.5rem;
+  height: 1.5rem;
+  padding: 0 var(--spacing-xs);
+  border: var(--size-border-thin) solid var(--color-primary-darker);
+  background-color: var(--color-bg-item);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  text-align: center;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.shopping-app__quantity-input::-webkit-outer-spin-button,
+.shopping-app__quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.shopping-app__quantity-input:focus {
+  outline: var(--size-outline) solid var(--color-primary-darker);
+  outline-offset: var(--size-outline-offset);
+}
+
+.shopping-app__quantity-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

@@ -119,10 +119,21 @@
             <div class="shopping-app__items-heading-actions">
               <span class="shopping-app__badge-count" aria-live="polite">
                 <span class="shopping-app__badge-dot" aria-hidden="true"></span>
-                <output class="shopping-app__item-count" for="item-input"
+                <output
+                  class="shopping-app__item-count"
+                  for="item-input"
+                  id="item-count-output"
                   >3</output
                 >
                 <span aria-label="items in list"> items</span>
+                <div
+                  class="shopping-app__count-tooltip"
+                  id="count-tooltip"
+                  role="tooltip"
+                  aria-hidden="true"
+                >
+                  <div class="shopping-app__count-tooltip-content"></div>
+                </div>
               </span>
               <button
                 type="button"
@@ -270,7 +281,7 @@
           </div>
 
           <ul class="shopping-app__list" aria-labelledby="items-heading">
-            <li class="shopping-app__item">
+            <li class="shopping-app__item" draggable="true">
               <label class="shopping-app__item-checkbox-label">
                 <input
                   type="checkbox"
@@ -278,7 +289,32 @@
                   aria-label="Mark Fresh blueberries as completed"
                 />
               </label>
-              <span class="shopping-app__item-name">Fresh blueberries</span>
+              <div class="shopping-app__item-name-container">
+                <span class="shopping-app__item-name">Fresh blueberries</span>
+                <div class="shopping-app__item-quantity">
+                  <button
+                    type="button"
+                    class="shopping-app__quantity-btn shopping-app__quantity-btn--decrease"
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    class="shopping-app__quantity-input"
+                    value="1"
+                    min="1"
+                    aria-label="Item quantity"
+                  />
+                  <button
+                    type="button"
+                    class="shopping-app__quantity-btn shopping-app__quantity-btn--increase"
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               <div class="shopping-app__item-actions">
                 <button
                   type="button"
@@ -297,7 +333,7 @@
               </div>
             </li>
 
-            <li class="shopping-app__item">
+            <li class="shopping-app__item" draggable="true">
               <label class="shopping-app__item-checkbox-label">
                 <input
                   type="checkbox"
@@ -305,7 +341,32 @@
                   aria-label="Mark Almond milk as completed"
                 />
               </label>
-              <span class="shopping-app__item-name">Almond milk</span>
+              <div class="shopping-app__item-name-container">
+                <span class="shopping-app__item-name">Almond milk</span>
+                <div class="shopping-app__item-quantity">
+                  <button
+                    type="button"
+                    class="shopping-app__quantity-btn shopping-app__quantity-btn--decrease"
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    class="shopping-app__quantity-input"
+                    value="1"
+                    min="1"
+                    aria-label="Item quantity"
+                  />
+                  <button
+                    type="button"
+                    class="shopping-app__quantity-btn shopping-app__quantity-btn--increase"
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               <div class="shopping-app__item-actions">
                 <button
                   type="button"
@@ -324,7 +385,7 @@
               </div>
             </li>
 
-            <li class="shopping-app__item">
+            <li class="shopping-app__item" draggable="true">
               <label class="shopping-app__item-checkbox-label">
                 <input
                   type="checkbox"
@@ -332,7 +393,32 @@
                   aria-label="Mark Whole grain bread as completed"
                 />
               </label>
-              <span class="shopping-app__item-name">Whole grain bread</span>
+              <div class="shopping-app__item-name-container">
+                <span class="shopping-app__item-name">Whole grain bread</span>
+                <div class="shopping-app__item-quantity">
+                  <button
+                    type="button"
+                    class="shopping-app__quantity-btn shopping-app__quantity-btn--decrease"
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <input
+                    type="number"
+                    class="shopping-app__quantity-input"
+                    value="1"
+                    min="1"
+                    aria-label="Item quantity"
+                  />
+                  <button
+                    type="button"
+                    class="shopping-app__quantity-btn shopping-app__quantity-btn--increase"
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               <div class="shopping-app__item-actions">
                 <button
                   type="button"

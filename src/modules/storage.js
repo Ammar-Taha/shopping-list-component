@@ -6,7 +6,7 @@ const STORAGE_KEY = "shopping-list-items";
 
 /**
  * Get all items from localStorage
- * @returns {Array<{name: string, completed: boolean}>} Array of item objects
+ * @returns {Array<{name: string, completed: boolean, quantity: number}>} Array of item objects
  */
 export function getStoredItems() {
   try {
@@ -16,9 +16,15 @@ export function getStoredItems() {
     const parsed = JSON.parse(stored);
     // Handle migration from old format (array of strings)
     if (parsed.length > 0 && typeof parsed[0] === "string") {
-      return parsed.map((name) => ({ name, completed: false }));
+      return parsed.map((name) => ({ name, completed: false, quantity: 1 }));
     }
-    return parsed;
+    // Handle migration from format without quantity
+    return parsed.map((item) => {
+      if (item.quantity === undefined) {
+        return { ...item, quantity: 1 };
+      }
+      return item;
+    });
   } catch (error) {
     console.error("Error reading from localStorage:", error);
     return [];
@@ -27,7 +33,7 @@ export function getStoredItems() {
 
 /**
  * Save items to localStorage
- * @param {Array<{name: string, completed: boolean}>} items - Array of item objects to save
+ * @param {Array<{name: string, completed: boolean, quantity: number}>} items - Array of item objects to save
  */
 export function saveItemsToStorage(items) {
   try {

@@ -96,34 +96,45 @@ export function updateItemCount() {
   if (!DOM.listElement) return;
 
   // Count only visible items (items that pass both completion and search filters)
+  // Sum quantities instead of counting unique items
   const items = DOM.listElement.querySelectorAll(".shopping-app__item");
-  let count = 0;
+  let totalQuantity = 0;
+  let uniqueItemCount = 0;
 
   items.forEach((item) => {
     // Only count items that are currently visible (pass both filters)
     if (item.style.display !== "none") {
-      count++;
+      uniqueItemCount++;
+      // Get quantity from the input
+      const quantityInput = item.querySelector(".shopping-app__quantity-input");
+      const quantity = quantityInput
+        ? parseInt(quantityInput.value, 10) || 1
+        : 1;
+      totalQuantity += quantity;
     }
   });
 
-  // Update the count in the output element
-  DOM.itemCountOutput.textContent = count;
+  // Update the count in the output element (show total quantity)
+  DOM.itemCountOutput.textContent = totalQuantity;
 
   // Update the label text (singular vs plural)
-  if (count === 1) {
+  if (totalQuantity === 1) {
     DOM.itemsLabel.textContent = " item";
   } else {
     DOM.itemsLabel.textContent = " items";
   }
 
-  // Show/hide filter buttons based on total item count
+  // Show/hide filter buttons based on total unique item count
   toggleFilterButtons();
 
-  // Update the filter empty state message if needed
-  updateFilterEmptyMessage(count);
+  // Update the filter empty state message if needed (use unique count for message logic)
+  updateFilterEmptyMessage(uniqueItemCount);
 
-  // Show/hide empty state and list based on total item count
+  // Show/hide empty state and list based on total unique item count
   toggleEmptyState();
+
+  // Update tooltip content
+  updateCountTooltip();
 }
 
 /**
@@ -248,4 +259,66 @@ function hideFilterEmptyMessage() {
   if (!DOM.filterEmptyStateMessage) return;
   DOM.filterEmptyStateMessage.hidden = true;
   DOM.filterEmptyStateMessage.textContent = "";
+}
+
+/**
+ * Update the count tooltip with item breakdown
+ */
+function updateCountTooltip() {
+  if (!DOM.listElement || !DOM.countTooltipContent) return;
+
+  // Get all visible items (respecting filters)
+  const items = DOM.listElement.querySelectorAll(".shopping-app__item");
+  const itemData = [];
+
+  items.forEach((item) => {
+    // Only include visible items
+    if (item.style.display === "none") return;
+
+    const nameElement = item.querySelector(".shopping-app__item-name");
+    const quantityInput = item.querySelector(".shopping-app__quantity-input");
+
+    if (nameElement && quantityInput) {
+      const name = nameElement.textContent.trim();
+      const quantity = parseInt(quantityInput.value, 10) || 1;
+
+      if (name) {
+        itemData.push({ name, quantity });
+      }
+    }
+  });
+
+  // Clear existing content
+  DOM.countTooltipContent.innerHTML = "";
+
+  // If no items, hide tooltip
+  if (itemData.length === 0) {
+    if (DOM.countTooltip) {
+      DOM.countTooltip.setAttribute("aria-hidden", "true");
+    }
+    return;
+  }
+
+  // Build tooltip content
+  itemData.forEach((item, index) => {
+    const tooltipItem = document.createElement("div");
+    tooltipItem.className = "shopping-app__count-tooltip-item";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "shopping-app__count-tooltip-item-name";
+    nameSpan.textContent = item.name;
+
+    const quantitySpan = document.createElement("span");
+    quantitySpan.className = "shopping-app__count-tooltip-item-quantity";
+    quantitySpan.textContent = `x${item.quantity}`;
+
+    tooltipItem.appendChild(nameSpan);
+    tooltipItem.appendChild(quantitySpan);
+    DOM.countTooltipContent.appendChild(tooltipItem);
+  });
+
+  // Show tooltip
+  if (DOM.countTooltip) {
+    DOM.countTooltip.setAttribute("aria-hidden", "false");
+  }
 }
