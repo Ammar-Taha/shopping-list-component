@@ -442,13 +442,12 @@ input[type="search"] {
 @media (max-width: 48rem) {
   body {
     padding: var(--spacing-sm);
-    align-content: start;
   }
 
   /* Container - full width with padding */
   .shopping-container {
     width: 100%;
-    padding: 0;
+    padding: var(--spacing-md);
   }
 
   .shopping-app {
