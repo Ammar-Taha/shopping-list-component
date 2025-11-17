@@ -9,6 +9,11 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <!-- Notyf Toast Notification Library -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
     <title>Shopping List</title>
   </head>
   <body>
@@ -111,53 +116,247 @@
             <h2 id="items-heading" class="shopping-app__items-title">
               Items to buy
             </h2>
-            <span class="shopping-app__badge-count" aria-live="polite">
-              <span class="shopping-app__badge-dot" aria-hidden="true"></span>
-              <output class="shopping-app__item-count" for="item-input"
-                >3</output
+            <div class="shopping-app__items-heading-actions">
+              <span class="shopping-app__badge-count" aria-live="polite">
+                <span class="shopping-app__badge-dot" aria-hidden="true"></span>
+                <output class="shopping-app__item-count" for="item-input"
+                  >3</output
+                >
+                <span aria-label="items in list"> items</span>
+              </span>
+              <button
+                type="button"
+                id="clear-all"
+                class="shopping-app__clear-all"
+                aria-label="Clear all items"
               >
-              <span aria-label="items in list"> items</span>
-            </span>
+                Clear All
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="shopping-app__filters"
+            role="group"
+            aria-label="Filter items"
+          >
+            <button
+              type="button"
+              id="filter-all"
+              class="shopping-app__filter-btn shopping-app__filter-btn--active"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            <button
+              type="button"
+              id="filter-active"
+              class="shopping-app__filter-btn"
+              aria-pressed="false"
+            >
+              Active
+            </button>
+            <button
+              type="button"
+              id="filter-completed"
+              class="shopping-app__filter-btn"
+              aria-pressed="false"
+            >
+              Completed
+            </button>
+          </div>
+
+          <p
+            id="filter-empty-state"
+            class="shopping-app__filter-empty-message"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
+
+          <div
+            class="shopping-app__empty-state"
+            id="empty-state"
+            style="display: none"
+          >
+            <svg
+              class="shopping-app__empty-state-illustration"
+              aria-hidden="true"
+              width="200"
+              height="200"
+              viewBox="0 0 200 200"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Focus/Spotlight circle -->
+              <circle
+                cx="100"
+                cy="100"
+                r="60"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-dasharray="4 4"
+                opacity="0.3"
+              />
+              <circle
+                cx="100"
+                cy="100"
+                r="40"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-dasharray="3 3"
+                opacity="0.4"
+              />
+              <circle
+                cx="100"
+                cy="100"
+                r="20"
+                stroke="currentColor"
+                stroke-width="2.5"
+                opacity="0.6"
+              />
+              <!-- Center dot -->
+              <circle cx="100" cy="100" r="4" fill="currentColor" />
+              <!-- Crosshair lines -->
+              <line
+                x1="100"
+                y1="30"
+                x2="100"
+                y2="70"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="100"
+                y1="130"
+                x2="100"
+                y2="170"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="30"
+                y1="100"
+                x2="70"
+                y2="100"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="130"
+                y1="100"
+                x2="170"
+                y2="100"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <button
+              type="button"
+              class="shopping-app__empty-state-button"
+              aria-label="Add your first item"
+            >
+              <span class="shopping-app__empty-state-icon" aria-hidden="true"
+                >+</span
+              >
+              <span class="shopping-app__empty-state-text"
+                >Add your first item</span
+              >
+            </button>
           </div>
 
           <ul class="shopping-app__list" aria-labelledby="items-heading">
             <li class="shopping-app__item">
+              <label class="shopping-app__item-checkbox-label">
+                <input
+                  type="checkbox"
+                  class="shopping-app__item-checkbox"
+                  aria-label="Mark Fresh blueberries as completed"
+                />
+              </label>
               <span class="shopping-app__item-name">Fresh blueberries</span>
-              <button
-                type="button"
-                class="shopping-app__item-delete"
-                aria-label="Remove Fresh blueberries"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
+              <div class="shopping-app__item-actions">
+                <button
+                  type="button"
+                  class="shopping-app__item-edit"
+                  aria-label="Edit Fresh blueberries"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="shopping-app__item-delete"
+                  aria-label="Remove Fresh blueberries"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
 
             <li class="shopping-app__item">
+              <label class="shopping-app__item-checkbox-label">
+                <input
+                  type="checkbox"
+                  class="shopping-app__item-checkbox"
+                  aria-label="Mark Almond milk as completed"
+                />
+              </label>
               <span class="shopping-app__item-name">Almond milk</span>
-              <button
-                type="button"
-                class="shopping-app__item-delete"
-                aria-label="Remove Almond milk"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
+              <div class="shopping-app__item-actions">
+                <button
+                  type="button"
+                  class="shopping-app__item-edit"
+                  aria-label="Edit Almond milk"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="shopping-app__item-delete"
+                  aria-label="Remove Almond milk"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
 
             <li class="shopping-app__item">
+              <label class="shopping-app__item-checkbox-label">
+                <input
+                  type="checkbox"
+                  class="shopping-app__item-checkbox"
+                  aria-label="Mark Whole grain bread as completed"
+                />
+              </label>
               <span class="shopping-app__item-name">Whole grain bread</span>
-              <button
-                type="button"
-                class="shopping-app__item-delete"
-                aria-label="Remove Whole grain bread"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
+              <div class="shopping-app__item-actions">
+                <button
+                  type="button"
+                  class="shopping-app__item-edit"
+                  aria-label="Edit Whole grain bread"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="shopping-app__item-delete"
+                  aria-label="Remove Whole grain bread"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           </ul>
         </section>
       </div>
     </main>
 
+    <!-- Notyf Toast Notification Library -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
